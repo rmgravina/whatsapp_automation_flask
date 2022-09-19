@@ -1,5 +1,44 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <h2 style="text-align: center;">Automação de envio de mensagens e notificações via WhatsApp</h2>
 <hr>
+
+{%- for flash in get_flashed_messages() %}
+  <div class="alert alert-danger">
+    {{flash}}
+  </div>
+
+{%- endfor %}
+
+<form action="{{url_for('principal')}}" method="POST" class="form-select">
+
+  <label class="input-group-text" for="inputGroupSelect01">Nome</label>
+  <select multiple class="form-select" id="inputGroupSelect01" name="nome_select">
+      <option selected>Selecione o contato</option>
+      {% for pessoa in pessoas %}
+      <option value="{{pessoa.id}}">{{pessoa.nome}}</option>
+      {% endfor %}
+  </select>
+
+  <!--<label class="input-group-text" for="inputGroupSelect02">Tipo da mensagem</label>
+  <select class="form-select" id="inputGroupSelect02" name="tipo_msg">
+    <option selected>Selecione o tipo da mensagem</option>
+    {% for tipo in tipos %}
+    <option value="{{tipo.id}}">{{tipo.tipo}}</option>
+    {% endfor %}
+  </select>-->
+
+  <label class="input-group-text" for="inputGroupSelect03">Mensagem</label>
+  <select class="form-select" id="inputGroupSelect03" name="mensagem_select">
+    <option selected>Escolha a mensagem</option>
+    {% for msg in mensagens %}
+    <option value="{{msg.id}}">{{msg.mensagem}}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-primary" type="button">Enviar</button>
+
+</form>
+
+  
 {% endblock content %}

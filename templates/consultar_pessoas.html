@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 style="text-align: center;">Consulta de contatos no banco de dados</h2>
+<hr>
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Telefone</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pessoa in pessoas %}
+        <tr>
+            <td>{{pessoa.id}}</td>
+            <td>{{pessoa.nome}}</td>
+            <td>{{pessoa.telefone}}</td>
+            <td>
+                <a href="{{pessoa.id}}/atualizar_pessoas" class="btn btn-secondary">Editar</a>
+                <a href="{{pessoa.id}}/excluir_pessoas" onclick="return confirm('Deseja excluir esse registro?')" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{url_for('cadastrar_pessoas')}}" class="btn btn-secondary">Adicionar Registro</a>
+{% endblock content %}

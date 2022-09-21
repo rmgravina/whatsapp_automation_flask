@@ -29,22 +29,49 @@ class mensagens(db.Model):
         self.mensagem = mensagem
 
 
+
+
 @app.route("/", methods=["GET", "POST"])
 def principal():
-    #tipos = mensagens.query.with_entities(mensagens.tipo).distinct()
-# CORRIGIR A PARTIR DAQUI (FILTRAR MSG POR TIPO)
-#    tipo_msg_select = request.form.get('tipo_msg')
-#    mensagens_filter = mensagens.query.filter_by(tipo=tipo_msg_select).all()
-    
-    nome_select = request.form.getlist('nome_select')
-    mensagem_select = request.form.get('mensagem_select')
+   
+    pessoa = pessoas.query.with_entities(pessoas.nome).all()
+    mensagem = mensagens.query.all()
+#    telefone = pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome)
 
-    if request.method == 'POST':
-        flash(nome_select, 'error')
-        flash(mensagem_select, "error")
+    if 'Adicionar pessoa' in request.form:
+        nomes = request.form.getlist('nome_select')
+        list_tel = []
+        a = 0
+
+        for nome in nomes:
+            list_tel.append(pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome).all())
+            out = [item for t in list_tel for item in t]
+            tel = [item for t in out for item in t]
+        print(tel)
+
+        return 'dONE'
+
+    elif 'Enviar mensagem' in request.form:
+
+        nomes = request.form.getlist('nome_select')
+        list_tel = [] 
+        for nome in nomes:
+            list_tel.append(pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome).all())
+            out = [item for t in list_tel for item in t]
+            tel = [item for t in out for item in t]
+
+        mensagem = request.form.get('mensagem_select')
+
+        for item in tel:
+            kt.sendwhatmsg_instantly(item, mensagem, 15, True, 3)
 
 
-    return render_template("index.html", pessoas=pessoas.query.all(), mensagens=mensagens.query.all())
+    return render_template("index.html", pessoas=pessoa, mensagens=mensagem)
+
+
+
+
+
 
 #BANCO DE DADOS: PESSOAS CRUD
 

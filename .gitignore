@@ -1,3 +1,4 @@
 venv/
 __pycache__/
 automation_whats.sqlite3
+PyWhatKit_DB.txt

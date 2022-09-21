@@ -1,5 +1,3 @@
-# render_template: renderizar as páginas html dentro do diretório templates
-#request: Possibilitar o uso das requests GET e POST
 from flask import Flask, render_template, request, flash, url_for, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import pywhatkit as kt

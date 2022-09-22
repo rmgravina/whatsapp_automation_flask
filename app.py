@@ -155,6 +155,19 @@ def excluir_mensagens(id):
 
 
 
+@app.route("/Logs", methods=["GET", "POST"])
+def logs():
+
+    contents = []
+
+    with open('PyWhatKit_DB.txt') as f:
+        for line in f.readlines():
+            a = line.strip()
+            contents.append(a)
+
+    
+    return render_template('logs.html', logs=contents)
+
 
 if __name__ == '__main__':
     db.create_all()

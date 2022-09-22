@@ -36,22 +36,9 @@ def principal():
    
     pessoa = pessoas.query.with_entities(pessoas.nome).all()
     mensagem = mensagens.query.all()
-#    telefone = pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome)
 
-    if 'Adicionar pessoa' in request.form:
-        nomes = request.form.getlist('nome_select')
-        list_tel = []
-        a = 0
 
-        for nome in nomes:
-            list_tel.append(pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome).all())
-            out = [item for t in list_tel for item in t]
-            tel = [item for t in out for item in t]
-        print(tel)
-
-        return 'dONE'
-
-    elif 'Enviar mensagem' in request.form:
+    if 'Enviar mensagem' in request.form:
 
         nomes = request.form.getlist('nome_select')
         list_tel = [] 

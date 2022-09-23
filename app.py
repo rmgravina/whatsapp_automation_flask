@@ -4,7 +4,6 @@ import pywhatkit as kt
 
 
 
-
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///automation_whats.sqlite3"
@@ -29,29 +28,34 @@ class mensagens(db.Model):
         self.mensagem = mensagem
 
 
-
-
 @app.route("/", methods=["GET", "POST"])
 def principal():
    
     pessoa = pessoas.query.with_entities(pessoas.nome).all()
-    mensagem = mensagens.query.all()
+    mensagem = mensagens.query.order_by(mensagens.mensagem).all()
 
 
     if 'Enviar mensagem' in request.form:
 
         nomes = request.form.getlist('nome_select')
-        list_tel = [] 
+        list_tel = []
+
         for nome in nomes:
             list_tel.append(pessoas.query.with_entities(pessoas.telefone).filter_by(nome=nome).all())
             out = [item for t in list_tel for item in t]
             tel = [item for t in out for item in t]
 
         mensagem = request.form.get('mensagem_select')
+        mensagem_inicial = 'Olá, NOME.'
+        index = 0
 
         for item in tel:
-            kt.sendwhatmsg_instantly(item, mensagem, 15, True, 3)
 
+            nova_mensagem_inicial = mensagem_inicial.replace('NOME', str(nomes[index]))
+            mensagem_padrao = '{}\n\n {}'.format(nova_mensagem_inicial, mensagem)
+            kt.sendwhatmsg_instantly(item, mensagem_padrao, 15, True, 3)
+            nova_mensagem_inicial = mensagem_inicial
+            index += 1
 
     return render_template("index.html", pessoas=pessoa, mensagens=mensagem)
 

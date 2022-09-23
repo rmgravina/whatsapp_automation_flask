@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 style="text-align: center;">Consulta de mensagens no banco de dados</h2>
+<div class="p-3 mb-2 bg-secondary text-white">
+    <h2 style="text-align: center;">Tabela de mensagens</h2>
+</div>
 <hr>
 <table class="table table-bordered table-hover">
     <thead class="table-dark">
@@ -27,5 +29,5 @@
     </tbody>
 </table>
 
-<a href="{{url_for('cadastrar_mensagens')}}" class="btn btn-secondary">Adicionar Registro</a>
+<a href="{{url_for('cadastrar_mensagens')}}" class="btn btn-primary">Adicionar Registro</a>
 {% endblock content %}

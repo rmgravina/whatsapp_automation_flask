@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 style="text-align: center;">Automação de envio de mensagens e notificações via WhatsApp</h2>
+<div class="p-3 mb-2 bg-secondary text-light"><h2 style="text-align: center;">Automação de envio de mensagens via WhatsApp</h2></div>
+
 <hr>
 
+<div class="p-3 mb-2 bg-dark text-white">
 <form method="POST" class="form-control" name="">
-
-  <label>Selecione o nome:</label>
+  <div class="p-3 mb-2 bg-secondary text-light">
+  <label><strong>Selecione o nome:</strong></label>
   <br>
   <select multiple class="form-control" id="nome_select" name="nome_select">
     {% for pessoa in pessoas %}
@@ -16,19 +18,20 @@
   
   <br>
   <br>
-  <label>Selecione a mensagem:</label>
+  <label><strong>Selecione a mensagem:</strong></label>
   <br>
 
   <select class="form-control" id="mensagem_select" name="mensagem_select">
     {% for mensagem in mensagens %}
+    <optgroup label="{{mensagem.tipo}}" id="{{mensagem.tipo}}"></optgroup>
     <option value="{{mensagem.mensagem}}">{{mensagem.mensagem}}</option>
     {% endfor %}
   </select>
   <br>
 
   <input class="btn btn-primary" type="submit" name="Enviar mensagem" value="Enviar mensagem">
-
-<!-- <button class="btn btn-primary">Enviar</button> -->  
+  </div>
 </form>
+</div>
   
 {% endblock content %}

@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask, render_template, request, flash, url_for, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import pywhatkit as kt
